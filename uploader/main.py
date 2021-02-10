@@ -40,7 +40,7 @@ def save_to_bucket(image):
         aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY']
     )
 
-    image_key = str(uuid.uuid4)
+    image_key = str(uuid.uuid4())
     s3_client.put_object(
         Bucket=os.environ['BUCKET_ID'],
         Key=image_key,
@@ -60,6 +60,8 @@ def handler(event, context):
     """
     content_type = event['headers']['Content-Type']
     decoded_request_body = base64.b64decode(event['body'])
+
+    image = None
 
     for part in decoder.MultipartDecoder(decoded_request_body, content_type).parts:
         content_disposition = part.headers[b'Content-Disposition'].decode('utf-8')
