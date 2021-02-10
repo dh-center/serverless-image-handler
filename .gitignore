@@ -1,2 +1,6 @@
 .idea
+.env
+.terraform
 venv
+*.zip
+terraform.tfvars
