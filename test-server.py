@@ -1,4 +1,6 @@
-from fastapi import FastAPI, Response
+from typing import Optional
+
+from fastapi import FastAPI, Response, Request
 from handler.main import handler
 from dotenv import load_dotenv
 from base64 import b64decode as dec64
@@ -16,13 +18,11 @@ def upload_image():
 
 
 @app.get("/handle")
-def handle_image(key):
+def handle_image(request: Request):
     event: YandexEvent = {
         "httpMethod": "GET",
         "headers": {},
-        "queryStringParameters": {
-            "key": key
-        },
+        "queryStringParameters": dict(request.query_params),
         "body": "",
         "isBase64Encoded": True
     }
