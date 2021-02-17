@@ -6,6 +6,8 @@ from base64 import b64encode
 import boto3
 import os
 from yandex_types import YandexEvent
+from PIL import Image, ImageFilter
+
 from typing import TypedDict, Dict
 
 

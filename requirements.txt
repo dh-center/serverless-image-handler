@@ -1,7 +1,19 @@
--r handler/requirements.txt
--r uploader/requirements.txt
-
+boto3==1.17.9
+botocore==1.20.9
+certifi==2020.12.5
+chardet==4.0.0
+click==7.1.2
 fastapi==0.63.0
-uvicorn==0.13.3
+h11==0.12.0
+idna==2.10
+jmespath==0.10.0
 pydantic==1.7.3
+python-dateutil==2.8.1
 python-dotenv==0.15.0
+requests==2.25.1
+requests-toolbelt==0.9.1
+s3transfer==0.3.4
+six==1.15.0
+starlette==0.13.6
+urllib3==1.26.3
+uvicorn==0.13.3
