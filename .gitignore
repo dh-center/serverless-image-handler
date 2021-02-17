@@ -4,3 +4,4 @@
 venv
 *.zip
 terraform.tfvars
+.ipynb_checkpoints
