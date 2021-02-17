@@ -1,14 +1,7 @@
-#!/usr/bin/env python
-# coding: utf-8
+-r handler/requirements.txt
+-r uploader/requirements.txt
 
-# In[ ]:
-
-
-requests-toolbelt==0.9.1
-boto3==1.16.31
-jsonschema==3.2.0
-pybase64==1.1.1
-botocore==1.19.31
-moto==1.3.16
-Pillow ==7.2.0
-
+fastapi==0.63.0
+uvicorn==0.13.3
+pydantic==1.7.3
+python-dotenv==0.15.0
