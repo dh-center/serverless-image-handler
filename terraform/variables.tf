@@ -24,6 +24,14 @@ variable "image_uploader_function" {
   description = "Properties for image uploader cloud function"
 }
 
+variable "image_handler_function" {
+  type = object({
+    name = string
+  })
+
+  description = "Properties for image handler cloud function"
+}
+
 variable "s3_config" {
   type = object({
     endpoint = string

@@ -1,9 +1,9 @@
-resource "yandex_function" "image_uploader" {
-  name = var.image_handler_function.name
+resource "yandex_function" "image_handler" {
+  name = var.image_uploader_function.name
   runtime = "python38"
-  entrypoint = "uploader.main.handler"
+  entrypoint = "handler.main.handler"
   memory = "128"
-  description = "Function for uploading images to bucket (Deployed with Terraform)"
+  description = "Function for transforming images from s3 bucket (Deployed with Terraform)"
   execution_timeout = "10"
   environment = {
     "AWS_ACCESS_KEY_ID": var.s3_config.access_key,
@@ -16,6 +16,6 @@ resource "yandex_function" "image_uploader" {
   }
 }
 
-output "yandex_function_image_uploader_id" {
-  value = yandex_function.image_uploader.id
+output "yandex_function_image_handler_id" {
+  value = yandex_function.image_handler.id
 }
