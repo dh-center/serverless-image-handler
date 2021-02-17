@@ -6,6 +6,10 @@ image_uploader_function = {
   name = "image-uploader-terraform"
 }
 
+image_handler_function = {
+  name = "image-handler-terraform"
+}
+
 //s3_backend_props = {
 //  endpoint = "storage.yandexcloud.net"
 //  bucket = "image-handler-bucket"
