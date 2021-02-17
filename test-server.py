@@ -26,6 +26,6 @@ def handle_image(request: Request):
         "body": "",
         "isBase64Encoded": True
     }
-    result = handler(event)
+    result = handler(event, {})
 
     return Response(content=dec64(result['body']), media_type="image/jpeg")
