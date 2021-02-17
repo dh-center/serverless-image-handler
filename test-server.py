@@ -28,4 +28,4 @@ def handle_image(request: Request):
     }
     result = handler(event, {})
 
-    return Response(content=dec64(result['body']), media_type="image/jpeg")
+    return Response(content=dec64(result['body']), media_type=result['headers']['Content-Type'])
