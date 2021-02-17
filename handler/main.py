@@ -2,9 +2,7 @@
 # Process image with filters
 # And return image in response
 
-import base64
-from base64 import b64encode as enc64
-from base64 import b64decode as dec64
+from base64 import b64encode
 import boto3
 import os
 from yandex_types import YandexEvent
@@ -20,13 +18,13 @@ class HandlerResponse(TypedDict):
 
 # Функция, которая декодирует байты
 def encode_file(image_file):
-    return base64.b64encode(image_file)
+    return b64encode(image_file)
 
 
 # Функция image-handler
 def handler(event: YandexEvent) -> HandlerResponse:
-    # передаем данные из HTTP запроса
     body = event['queryStringParameters']
+    image_key = body["key"]
 
     session = boto3.session.Session()
     s3 = session.client(
@@ -36,16 +34,12 @@ def handler(event: YandexEvent) -> HandlerResponse:
         aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY'],
     )
 
-    image_key = body["key"]
-    # достаем файл из бакета
     get_object_response = s3.get_object(
         Bucket=os.environ['BUCKET_ID'],
         Key=image_key
-    )  # в скобках имя бакета и имя файла, в бакете
+    )
     image_from_bucket = get_object_response['Body'].read()
     decoded_image = encode_file(image_from_bucket)
-
-    # применяем фильтры по запросу пользователя
 
     return {
         'statusCode': 200,
