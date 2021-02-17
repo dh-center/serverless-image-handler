@@ -6,6 +6,8 @@ from requests_toolbelt.multipart import decoder
 import re
 import boto3
 
+from yandex_types import YandexEvent
+
 
 def get_field_name(content_disposition):
     """Gets field name from Content-Disposition HTTP Header
@@ -84,11 +86,10 @@ def save_to_bucket(image, file_extension):
     return image_key
 
 
-def handler(event, context):
+def handler(event: YandexEvent):
     """Gets image from POST event and saves it to S3 bucket
 
     :param event: Yandex Cloud Function event
-    :param context: Yandex Cloud Function context
 
     :returns: HTTP response with key of image in S3 bucket
     """
