@@ -2,6 +2,9 @@ import os
 import re
 import boto3
 import uuid
+from requests_toolbelt.multipart import decoder
+import base64
+from typing import Tuple
 
 
 def get_file_format(filename: str) -> str:
@@ -10,7 +13,7 @@ def get_file_format(filename: str) -> str:
     :param filename: name for getting file format
     :return: Pillow image format
     """
-    filename, file_extension_with_dot = os.path.splitext(filename)
+    file_extension_with_dot = get_file_extension(filename)
     file_extension = file_extension_with_dot[1:]
 
     if file_extension == 'jpg':
@@ -47,22 +50,18 @@ def get_field_filename(content_disposition: str) -> str:
             return search_result.group(1)
 
 
-def get_file_extension(file_name):
+def get_file_extension(file_name: str) -> str:
     """
     Gets file extension from filename.
     If can't get file extension returns None.
-
     :param file_name: File name
-    :type file_name: str
-
     :returns: File extension (example: '.jpg')
-    :rtype: str
     """
-    file_extension = re.search('.[0-9a-z]+$', file_name, re.IGNORECASE).group(0)
-    return file_extension or None
+    _, file_extension = os.path.splitext(file_name)
+    return file_extension
 
 
-def save_to_bucket(image: str, file_extension: str) -> str:
+def save_to_bucket(image: bytes, file_extension: str) -> str:
     """
     Connects to S3 bucket and saves image to them
     :param image: Image for saving
@@ -84,3 +83,25 @@ def save_to_bucket(image: str, file_extension: str) -> str:
         StorageClass='STANDARD'
     )
     return image_key
+
+
+def get_image_from_body(body: bytes, content_type: str) -> Tuple[bytes, str]:
+    """
+    Parses request body and returns image data from it
+    :param body: body to parse
+    :param content_type: content type to correctly parse body
+    :return: image data
+    """
+    decoded_request_body = base64.b64decode(body)
+    image = None
+    file_extension = None
+
+    for part in decoder.MultipartDecoder(decoded_request_body, content_type).parts:
+        content_disposition = part.headers[b'Content-Disposition'].decode('utf-8')
+        field_name = get_field_name(content_disposition)
+        if field_name == 'image':
+            image = part.content
+        filename = get_field_filename(content_disposition)
+        file_extension = get_file_extension(filename)
+
+    return image, file_extension

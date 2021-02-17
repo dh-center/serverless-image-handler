@@ -14,7 +14,7 @@ app = FastAPI()
 @app.post("/upload")
 async def upload_image(request: Request):
     event: YandexEvent = {
-        "httpMethod": "GET",
+        "httpMethod": "POST",
         "headers": request.headers,
         "queryStringParameters": {},
         "body": base64.b64encode(await request.body()),
