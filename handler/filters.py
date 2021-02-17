@@ -1,4 +1,4 @@
-from PIL import Image, ImageFilter
+from PIL import Image, ImageFilter, ImageOps
 
 
 def blur(image, params):
@@ -32,7 +32,45 @@ def pixelate(image, params):
     return image
 
 
+def grayscale(image, params):
+    return ImageOps.grayscale(image)
+
+
+def scale(image, params):
+    factor = int(params)
+    return ImageOps.scale(image, factor)
+
+
+def flip(image, params):
+    return ImageOps.flip(image)
+
+
+def invert(image, params):
+    return ImageOps.invert(image)
+
+
+def mirror(image, params):
+    return ImageOps.mirror(image)
+
+
+def posterize(image, params):
+    bits = int(params)
+    return ImageOps.posterize(image, bits)
+
+
+def solarize(image, params):
+    threshold = int(params)
+    return ImageOps.solarize(image, threshold)
+
+
 filters = {
     'blur': blur,
-    'pixelate': pixelate
+    'pixelate': pixelate,
+    'grayscale': grayscale,
+    'scale': scale,
+    'flip': flip,
+    'invert': invert,
+    'mirror': mirror,
+    'posterize': posterize,
+    'solarize': solarize,
 }
