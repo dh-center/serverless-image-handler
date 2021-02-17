@@ -86,10 +86,11 @@ def save_to_bucket(image, file_extension):
     return image_key
 
 
-def handler(event: YandexEvent):
+def handler(event: YandexEvent, context):
     """Gets image from POST event and saves it to S3 bucket
 
     :param event: Yandex Cloud Function event
+    :param context: Yandex Cloud Function context
 
     :returns: HTTP response with key of image in S3 bucket
     """

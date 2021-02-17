@@ -1,12 +1,18 @@
 resource "yandex_function" "image-uploader" {
   name = var.image_uploader_function.name
-  runtime = "python37-preview"
-  entrypoint = "main"
+  runtime = "python38"
+  entrypoint = "uploader.main.handler"
   memory = "128"
+  description = "Function for uploading images to bucket (Deployed with Terraform)"
   execution_timeout = "10"
-  user_hash = filesha256("../image-uploader.zip")
+  environment = {
+    "AWS_ACCESS_KEY_ID": var.s3_config.access_key,
+    "AWS_SECRET_ACCESS_KEY": var.s3_config.secret_key,
+    "BUCKET_ID": var.s3_config.bucket
+  }
+  user_hash = filesha256(data.archive_file.code_archive.output_path)
   content {
-    zip_filename = "../image-uploader.zip"
+    zip_filename = data.archive_file.code_archive.output_path
   }
 }
 
