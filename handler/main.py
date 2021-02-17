@@ -8,9 +8,10 @@ import os
 import io
 from utils import get_file_format
 from yandex_types import YandexEvent
-from PIL import Image, ImageFilter
+from PIL import Image
 import mimetypes
 from typing import TypedDict, Dict
+from handler.filters import filters
 
 
 class HandlerResponse(TypedDict):
@@ -49,9 +50,9 @@ def handler(event: YandexEvent, context) -> HandlerResponse:
     image_from_bucket = get_object_response['Body'].read()
     image = Image.open(io.BytesIO(image_from_bucket))
 
-    if 'blur' in params:
-        blur_radius = int(params['blur'])
-        image = image.filter(ImageFilter.GaussianBlur(blur_radius))
+    for param_name, param_value in params.items():
+        if param_name in filters:
+            image = filters[param_name](image, param_value)
 
     buffered = io.BytesIO()
     image.save(buffered, format=file_format)
