@@ -6,3 +6,4 @@ class YandexEvent(TypedDict):
     headers: Dict[str, str]
     body: str
     queryStringParameters: Dict[str, str]
+    isBase64Encoded: bool
