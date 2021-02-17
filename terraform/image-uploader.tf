@@ -1,5 +1,5 @@
 resource "yandex_function" "image_uploader" {
-  name = var.image_handler_function.name
+  name = var.image_uploader_function.name
   runtime = "python38"
   entrypoint = "uploader.main.handler"
   memory = "128"

@@ -19,8 +19,14 @@ class HandlerResponse(TypedDict):
     isBase64Encoded: bool
 
 
-# Функция image-handler
-def handler(event: YandexEvent) -> HandlerResponse:
+def handler(event: YandexEvent, context) -> HandlerResponse:
+    """Gets image properties from request, load image from bucket, transforms it and returns
+
+    :param event: Yandex Cloud Function event
+    :param context: Yandex Cloud Function context
+
+    :returns: HTTP response transformed image
+    """
     params = event['queryStringParameters']
     image_key = params["key"]
 
@@ -50,7 +56,7 @@ def handler(event: YandexEvent) -> HandlerResponse:
     return {
         'statusCode': 200,
         'headers': {
-            'content-type': 'image/png'
+            'Content-Type': 'image/jpeg'
         },
         'body': img_str.decode('utf-8'),
         'isBase64Encoded': True
