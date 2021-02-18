@@ -4,7 +4,8 @@ import boto3
 import uuid
 from requests_toolbelt.multipart import decoder
 import base64
-from typing import Tuple
+from typing import Tuple, Any
+from src.yandex_types import YandexEvent, HandlerFunction, YandexResponse
 
 
 def get_file_format(filename: str) -> str:
@@ -105,3 +106,27 @@ def get_image_from_body(body: bytes, content_type: str) -> Tuple[bytes, str]:
         file_extension = get_file_extension(filename)
 
     return image, file_extension
+
+
+def handle_cors(handler_function: HandlerFunction) -> HandlerFunction:
+    """
+    Decorator for handling CORS requests
+    :param handler_function: function to wrap
+    :return: new handler function
+    """
+    def upgraded_handler(event: YandexEvent, context: Any):
+        if event['httpMethod'] == 'OPTIONS':
+            return {
+                'statusCode': 204,
+                'headers': {
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Methods': 'GET, POST, PUT, PATCH, DELETE',
+                    'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Authorization',
+                },
+                'body': '',
+                'isBase64Encoded': False
+            }
+        else:
+            return handler_function(event, context)
+
+    return upgraded_handler
