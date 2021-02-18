@@ -1,10 +1,10 @@
 from fastapi import FastAPI, Response, Request
-from handler.main import handler
-from uploader.main import handler as uploader
+from src.handler import handler
+from src.uploader import handler as uploader
 from dotenv import load_dotenv
 import base64
 
-from yandex_types import YandexEvent
+from src.yandex_types import YandexEvent
 
 load_dotenv()
 

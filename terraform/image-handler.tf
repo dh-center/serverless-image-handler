@@ -1,7 +1,7 @@
 resource "yandex_function" "image_handler" {
   name = var.image_handler_function.name
   runtime = "python38"
-  entrypoint = "handler.main.handler"
+  entrypoint = "src.handler.handler"
   memory = "128"
   description = "Function for transforming images from s3 bucket (Deployed with Terraform)"
   execution_timeout = "10"
