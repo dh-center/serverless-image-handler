@@ -6,12 +6,12 @@ from base64 import b64encode
 import boto3
 import os
 import io
-from utils import get_file_format
-from yandex_types import YandexEvent
+from src.utils import get_file_format
+from src.yandex_types import YandexEvent
 from PIL import Image
 import mimetypes
 from typing import TypedDict, Dict
-from handler.filters import filters
+from src.filters import filters
 
 
 class HandlerResponse(TypedDict):

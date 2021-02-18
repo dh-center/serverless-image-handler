@@ -1,5 +1,5 @@
-from utils import save_to_bucket, get_image_from_body
-from yandex_types import YandexEvent
+from src.utils import save_to_bucket, get_image_from_body
+from src.yandex_types import YandexEvent
 
 
 def handler(event: YandexEvent, context):
