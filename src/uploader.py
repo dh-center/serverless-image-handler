@@ -1,8 +1,10 @@
-from src.utils import save_to_bucket, get_image_from_body
-from src.yandex_types import YandexEvent
+from src.utils import save_to_bucket, get_image_from_body, handle_cors
+from src.yandex_types import YandexEvent, YandexResponse
+from typing import Any
 
 
-def handler(event: YandexEvent, context):
+@handle_cors
+def handler(event: YandexEvent, context: Any) -> YandexResponse:
     """
     Gets image from POST event and saves it to S3 bucket
 
@@ -29,6 +31,7 @@ def handler(event: YandexEvent, context):
             'content-type': 'application/json'
         },
         'body': {
-            'image-key': image_key
-        }
+            'image_key': image_key
+        },
+        'isBase64Encoded': False
     }

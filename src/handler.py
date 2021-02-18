@@ -1,27 +1,17 @@
-# Function gets image from S3 by key
-# Process image with filters
-# And return image in response
-
 from base64 import b64encode
 import boto3
 import os
 import io
-from src.utils import get_file_format
-from src.yandex_types import YandexEvent
+from src.utils import get_file_format, handle_cors
+from src.yandex_types import YandexEvent, YandexResponse
 from PIL import Image
 import mimetypes
-from typing import TypedDict, Dict
 from src.filters import filters
+from typing import Any
 
 
-class HandlerResponse(TypedDict):
-    statusCode: int
-    headers: Dict[str, str]
-    body: str
-    isBase64Encoded: bool
-
-
-def handler(event: YandexEvent, context) -> HandlerResponse:
+@handle_cors
+def handler(event: YandexEvent, context: Any) -> YandexResponse:
     """Gets image properties from request, load image from bucket, transforms it and returns
 
     :param event: Yandex Cloud Function event
