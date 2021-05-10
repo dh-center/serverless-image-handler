@@ -37,7 +37,6 @@ variable "s3_config" {
     endpoint = string
     bucket = string
     region = string
-    key = string
     access_key = string
     secret_key = string
   })

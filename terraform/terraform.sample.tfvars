@@ -10,6 +10,14 @@ image_handler_function = {
   name = "image-handler-terraform"
 }
 
+s3_config = {
+  endpoint = "storage.yandexcloud.net"
+  bucket = "image-handler-bucket"
+  region = "ru-central1"
+  access_key = ""
+  secret_key = ""
+}
+
 //s3_backend_props = {
 //  endpoint = "storage.yandexcloud.net"
 //  bucket = "image-handler-bucket"
