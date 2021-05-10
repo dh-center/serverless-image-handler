@@ -10,10 +10,10 @@ data "archive_file" "code_archive" {
     ".DS_Store",
     ".env",
     ".idea",
-    ".ipynb_checkpoints",
     "__pycache__",
     "serverless-image-handler.zip",
-    "terraform"
+    "terraform",
+    "ui"
   ]
 }
 
